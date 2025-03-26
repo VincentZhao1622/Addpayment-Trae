@@ -10,9 +10,11 @@ import {
 import { useCartStore } from '@/store/cartStore';
 import { useNavigate } from 'react-router-dom';
 import PayPalButton from '@/components/PaymentMethod/PayPal';
+import { useBuyerStore } from '@/store/buyerStore'; // 新增
 
 const CheckoutForm: React.FC = () => {
   const cart = useCartStore((state) => state.cart);
+  const buyer = useBuyerStore((state) => state.buyer); // 新增
   const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -27,58 +29,105 @@ const CheckoutForm: React.FC = () => {
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
+          {/* Buyer Information */}
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="name"
-              name="name"
-              label="Name"
+              id="firstName"
+              name="firstName"
+              label="First Name"
               fullWidth
-              autoComplete="given-name"
+              defaultValue={buyer.firstName} // 新增
               variant="standard"
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="phone"
-              name="phone"
-              label="Phone"
+              id="lastName"
+              name="lastName"
+              label="Last Name"
               fullWidth
-              autoComplete="tel"
+              defaultValue={buyer.lastName} // 新增
               variant="standard"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               required
               id="email"
               name="email"
               label="Email"
               fullWidth
-              autoComplete="email"
-              variant="standard"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="address"
-              name="address"
-              label="Address"
-              fullWidth
-              autoComplete="shipping address-line1"
+              defaultValue={buyer.email} // 新增
               variant="standard"
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="zip"
-              name="zip"
+              id="phoneNumber"
+              name="phone"
+              label="phone"
+              fullWidth
+              defaultValue={buyer.phoneNumber} // 新增
+              variant="standard"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="addressLine1"
+              name="addressLine1"
+              label="addressLine1"
+              fullWidth
+              defaultValue={buyer.shippingAddress.addressLine1} // 新增
+              variant="standard"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="addressLine2"
+              name="addressLine2"
+              label="addressLine2"
+              fullWidth
+              defaultValue={buyer.shippingAddress.addressLine2} // 新增
+              variant="standard"
+            />
+          </Grid>
+          
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="adminArea1"
+              name="adminArea1"
+              label="adminArea1"
+              fullWidth
+              defaultValue={buyer.shippingAddress.adminArea1} // 新增
+              variant="standard"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="adminArea2"
+              name="adminArea2"
+              label="adminArea2"
+              fullWidth
+              defaultValue={buyer.shippingAddress.adminArea2} // 新增
+              variant="standard"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="postalCode"
+              name="postalCode"
               label="Zip / Postal code"
               fullWidth
-              autoComplete="shipping postal-code"
+              defaultValue={buyer.shippingAddress.postalCode} // 新增
               variant="standard"
             />
           </Grid>
@@ -89,19 +138,11 @@ const CheckoutForm: React.FC = () => {
               name="country"
               label="Country"
               fullWidth
-              autoComplete="shipping country"
+              defaultValue={buyer.shippingAddress.countryCode} // 新增
               variant="standard"
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="province"
-              name="province"
-              label="Province"
-              fullWidth
-              variant="standard"
-            />
-          </Grid>
+        
           <Grid item xs={12}>
             <Box border={1} borderColor="gray" p={2} mt={2}>
               <Typography variant="h6">Payment Method</Typography>

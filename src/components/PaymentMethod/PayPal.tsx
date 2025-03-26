@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useCartStore } from '@/store/cartStore';
+import { useBuyerStore } from '@/store/buyerStore';
 
 declare global {
   interface Window {
@@ -10,6 +11,7 @@ declare global {
 const PayPalButton: React.FC = () => {
   const paypalButtonRef = useRef<HTMLDivElement>(null);
   const cart = useCartStore((state) => state.cart);
+  const buyer = useBuyerStore((state) => state.buyer);
   const scriptLoaded = useRef(false);
 
   const loadPayPalScript = () => {
@@ -20,7 +22,7 @@ const PayPalButton: React.FC = () => {
       }
 
       const script = document.createElement('script');
-      script.src = `https://www.paypal.com/sdk/js?client-id=test&currency=USD`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=Af1zAtojCDw4eHuwALZOHgAXiaA3nXpZYHztRao6k7cGL6Yvf7SmKcab1YKV-vFMgc3drfErhzzOlFHd&currency=USD`;
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => reject(new Error('PayPal SDK 加载失败'));
@@ -35,36 +37,34 @@ const PayPalButton: React.FC = () => {
     paypalButtonRef.current.innerHTML = '';
 
     // 计算总金额
-    const totalAmount = cart.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    ).toFixed(2);
+    // const totalAmount = cart.reduce(
+    //   (sum, item) => sum + item.price * item.quantity,
+    //   0
+    // ).toFixed(2);
 
     // 创建商品列表
     const items = cart.map(item => ({
-      name: item.name,
-      unit_amount: {
-        currency_code: 'USD',
-        value: item.price.toFixed(2)
-      },
-      quantity: item.quantity
+      productName: item.name,
+      unit: item.quantity,
+      price: item.price.toFixed(2)
     }));
 
     window.paypal
       .Buttons({
         createOrder: async () => {
           try {
-            const response = await fetch('http://localhost:5004/api/orders', {
+            const response = await fetch('/api/orders', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                items: items,
-                amount: {
-                  currency_code: 'USD',
-                  value: totalAmount
-                }
+                buyer: buyer,
+                items: items
+                // amount: {
+                //   currency_code: 'USD',
+                //   value: totalAmount
+                // }
               }),
             });
 
@@ -78,7 +78,7 @@ const PayPalButton: React.FC = () => {
         onApprove: async (data: { orderID: string }) => {
           try {
             const response = await fetch(
-              `http://localhost:5004/api/orders/${data.orderID}/capture`,
+              `http://127.0.0.1:8080/api/orders/${data.orderID}/capture`,
               {
                 method: 'POST',
                 headers: {
