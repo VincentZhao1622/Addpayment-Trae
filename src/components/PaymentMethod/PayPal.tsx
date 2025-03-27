@@ -60,7 +60,7 @@ const PayPalButton: React.FC = () => {
               },
               body: JSON.stringify({
                 buyer: buyer,
-                items: items
+                products: items
                 // amount: {
                 //   currency_code: 'USD',
                 //   value: totalAmount
