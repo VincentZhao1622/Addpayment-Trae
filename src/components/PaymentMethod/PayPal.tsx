@@ -22,7 +22,7 @@ const PayPalButton: React.FC = () => {
       }
 
       const script = document.createElement('script');
-      script.src = `https://www.paypal.com/sdk/js?client-id=Af1zAtojCDw4eHuwALZOHgAXiaA3nXpZYHztRao6k7cGL6Yvf7SmKcab1YKV-vFMgc3drfErhzzOlFHd&currency=USD`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=AaejZt7FaKfFaQlYVBuWYqTp23jCmQeoX9SXXa7kWiFm0GkzFsFzEUVMTFAnUw3XlYWqZIqCrSgUI1GO&currency=USD`;
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => reject(new Error('PayPal SDK 加载失败'));
