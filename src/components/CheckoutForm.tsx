@@ -151,14 +151,14 @@ const CheckoutForm: React.FC = () => {
           </Grid>
         </Grid>
         <Box mt={3} display="flex" justifyContent="flex-end">
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
             type="submit"
             sx={{ mr: 2 }}
           >
             Pay $ {cart.reduce((sum, item) => sum + item.price * item.quantity, 0)}
-          </Button>
+          </Button> */}
           <Button variant="outlined" onClick={() => navigate('/cart')}>
             Cancel
           </Button>
