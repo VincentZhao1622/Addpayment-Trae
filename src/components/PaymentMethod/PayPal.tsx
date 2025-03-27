@@ -78,7 +78,7 @@ const PayPalButton: React.FC = () => {
         onApprove: async (data: { orderID: string }) => {
           try {
             const response = await fetch(
-              `http://127.0.0.1:8080/api/orders/${data.orderID}/capture`,
+              `/api/orders/${data.orderID}/capture`,
               {
                 method: 'POST',
                 headers: {
