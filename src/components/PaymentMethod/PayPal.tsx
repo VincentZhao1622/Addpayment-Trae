@@ -89,7 +89,10 @@ const PayPalButton: React.FC = () => {
 
             const orderData = await response.json();
             // 支付成功处理
-            alert('支付成功！订单ID: ' + orderData.id);
+            setTimeout(()=>{
+              alert('支付成功！订单ID: ' + orderData.id);
+            },1200)
+           
           } catch (error) {
             console.error('支付捕获失败:', error);
           }
