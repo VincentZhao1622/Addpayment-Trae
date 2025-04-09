@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   CardActions,
+  CardMedia
 } from '@mui/material';
 import { Product } from '@/types/product';
 import CanvasThumbnail from './CanvasThumbnail';
@@ -28,7 +29,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       }}
     >
       <CardContent>
-        <CanvasThumbnail width={100} height={100} draw={product.draw} />
+        <CardMedia
+            component="img"
+            height="100"
+            image={product.imageUrl}
+            alt={product.name}
+            sx={{ objectFit: 'contain' }}
+          />
         <Typography gutterBottom variant="h5" component="div">
           {product.name}
         </Typography>

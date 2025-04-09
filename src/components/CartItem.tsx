@@ -7,6 +7,7 @@ import {
   Button,
   Grid,
   Box,
+  CardMedia
 } from '@mui/material';
 import CanvasThumbnail from './CanvasThumbnail';
 import { useCartStore } from '@/store/cartStore';
@@ -28,7 +29,13 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={2}>
-            <CanvasThumbnail width={100} height={100} draw={item.draw} />
+          <CardMedia
+              component="img"
+              height="100"
+              image={item.imageUrl}
+              alt={item.name}
+              sx={{ objectFit: 'contain' }}
+            />
           </Grid>
           <Grid item xs={3}>
             <Typography variant="h6">{item.name}</Typography>

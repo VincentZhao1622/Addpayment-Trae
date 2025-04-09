@@ -4,5 +4,5 @@ export interface Product {
   name: string;
   price: number;
   quantity: number;
-  draw: (ctx: CanvasRenderingContext2D) => void;
+  imageUrl: string;  // 替换原来的draw函数
 }
